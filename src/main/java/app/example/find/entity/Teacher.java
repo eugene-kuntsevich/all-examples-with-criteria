@@ -2,9 +2,7 @@ package app.example.find.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,8 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -66,7 +62,7 @@ public class Teacher implements Serializable
 		this.name = name;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER, targetEntity = Student.class, cascade = CascadeType.ALL)
+	@ManyToMany(targetEntity = Student.class, cascade = CascadeType.ALL)
 	@JoinTable(name = "STUDENTS_TO_TEACHERS", joinColumns = {@JoinColumn(name = "teacher_id")}, inverseJoinColumns = {@JoinColumn(
 		name = "student_id")})
 	@BatchSize(size = 10)
@@ -80,7 +76,7 @@ public class Teacher implements Serializable
 		this.students = students;
 	}
 
-	@ManyToOne(targetEntity = TeachingDepartment.class)
+	@ManyToOne(fetch =  FetchType.LAZY)
 	@JoinColumn(name = "teaching_department_id")
 	public TeachingDepartment getTeachingDepartment()
 	{

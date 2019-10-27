@@ -14,9 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 @Entity
 @Table(name = "TEACHING_DEPARTMENTS")
 public class TeachingDepartment
@@ -59,7 +56,7 @@ public class TeachingDepartment
 		this.departmentName = departmentName;
 	}
 
-	@OneToMany(targetEntity = Teacher.class, mappedBy = "teachingDepartment", cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Teacher.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "teachingDepartment")
 	public List<Teacher> getTeachers()
 	{
 		return teachers;

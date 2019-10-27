@@ -5,8 +5,6 @@ import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.Session;
 import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 
 public class SpringContext
 {
