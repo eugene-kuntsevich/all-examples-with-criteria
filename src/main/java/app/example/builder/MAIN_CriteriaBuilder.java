@@ -6,6 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -21,12 +24,20 @@ public class MAIN_CriteriaBuilder
 		EntityManager entityManager = SpringContext.getInstance().getEntityManager();
 
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Student> criteriaQuery = criteriaBuilder.createQuery(Student.class);
-		Root<Student> root = criteriaQuery.from(Student.class);
-		criteriaQuery.select(root);
+		CriteriaQuery<Student> cr = criteriaBuilder.createQuery(Student.class);
+		Root<Student> root = (Root<Student>) cr.from(Student.class).alias("st");
+		ParameterExpression<String> nameParam = criteriaBuilder.parameter(String.class,"nameParamExpression");
+		Path<String> studentName = root.get("name");
+		Path<Number> studentId = root.get("studentId");
+		Predicate like = criteriaBuilder.like(studentName, nameParam);
+		Predicate gt = criteriaBuilder.gt(studentId, 2);
+		Predicate and = criteriaBuilder.and(like, gt);
+		cr.select(root).where(and);
 
-		Query query = entityManager.createQuery(criteriaQuery);
+
+		Query query = entityManager.createQuery(cr).setParameter("nameParamExpression", "%sha");
 		List<Student> results = query.getResultList();
+		System.out.println("size = " + results.size());
 		System.out.println("Student: \nId: " + results.get(0).getStudentId() + " name: " + results.get(0).getName());
 	}
 }

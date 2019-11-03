@@ -1,11 +1,6 @@
 package app.example.persist.dao;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-
 
 import app.SpringContext;
 import app.example.persist.entity.Student;
