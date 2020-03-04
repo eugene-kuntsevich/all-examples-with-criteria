@@ -1,8 +1,8 @@
 package app.example.persist.entity;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,22 +24,21 @@ public class Teacher implements Serializable
 {
 	private Long teacherId;
 	private String name;
-	private Set<Student> students = new HashSet<>();
+	private List<Student> students = new ArrayList<>();
 	private TeachingDepartment teachingDepartment;
 
 	public Teacher()
 	{
 	}
 
-	public Teacher(String name, Set<Student> students)
+	public Teacher(String name)
 	{
 		this.name = name;
-		this.students = students;
 	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "teacher_id", unique = true, nullable = false)
+	@Column(name = "id", unique = true, nullable = false)
 	public Long getTeacherId()
 	{
 		return teacherId;
@@ -60,16 +59,15 @@ public class Teacher implements Serializable
 		this.name = name;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER, targetEntity = Student.class, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, targetEntity = Student.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinTable(name = "STUDENTS_TO_TEACHERS", joinColumns = {@JoinColumn(name = "teacher_id")}, inverseJoinColumns = {@JoinColumn(
 		name = "student_id")})
-	//@ManyToMany(mappedBy = "teachers")
-	public Set<Student> getStudents()
+	public List<Student> getStudents()
 	{
 		return students;
 	}
 
-	public void setStudents(Set<Student> students)
+	public void setStudents(List<Student> students)
 	{
 		this.students = students;
 	}

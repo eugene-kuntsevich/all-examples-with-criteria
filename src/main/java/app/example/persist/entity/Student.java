@@ -1,21 +1,20 @@
 package app.example.persist.entity;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "STUDENTS")
@@ -23,7 +22,7 @@ public class Student implements Serializable
 {
 	private Long studentId;
 	private String name;
-	private Set<Teacher> teachers = new HashSet<>();
+	private List<Teacher> teachers = new ArrayList<>();
 
 	public Student()
 	{
@@ -35,8 +34,8 @@ public class Student implements Serializable
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "student_id", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", unique = true, nullable = false)
 	public Long getStudentId()
 	{
 		return studentId;
@@ -57,15 +56,15 @@ public class Student implements Serializable
 		this.name = name;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER, targetEntity = Teacher.class, cascade = {CascadeType.ALL})
+	@ManyToMany(fetch = FetchType.EAGER, targetEntity = Teacher.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinTable(name = "STUDENTS_TO_TEACHERS", joinColumns = {@JoinColumn(name = "student_id")}, inverseJoinColumns = {@JoinColumn(
 		name = "teacher_id")})
-	public Set<Teacher> getTeachers()
+	public List<Teacher> getTeachers()
 	{
 		return teachers;
 	}
 
-	public void setTeachers(Set<Teacher> teachers)
+	public void setTeachers(List<Teacher> teachers)
 	{
 		this.teachers = teachers;
 	}

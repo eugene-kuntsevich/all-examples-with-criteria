@@ -1,27 +1,34 @@
 package app.example.persist;
 
+import java.util.Collections;
+
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import app.example.persist.dao.SaveStudentDao;
-import app.example.persist.dao.DaoSaveTeacher;
-import app.example.persist.dao.DaoSaveTeachingDepartment;
+import app.example.persist.dao.SaveTeacherDao;
+import app.example.persist.dao.SaveTeachingDepartmentDao;
 import app.example.persist.entity.Student;
+import app.example.persist.entity.Teacher;
+import app.example.persist.entity.TeachingDepartment;
 
-@EnableTransactionManagement
 public class MAIN
 {
 	public static void main(String[] args)
 	{
-		new ClassPathXmlApplicationContext("META-INF/persist/spring.xml");
-		SaveStudentDao daoSaveStudent = new SaveStudentDao();
-		DaoSaveTeacher daoSaveTeacher = new DaoSaveTeacher();
-		DaoSaveTeachingDepartment daoSaveTeachingDepartment = new DaoSaveTeachingDepartment();
+		ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext("META-INF/persist/spring.xml");
+		SaveStudentDao daoSaveStudent = (SaveStudentDao) classPathXmlApplicationContext.getBean("SaveStudentDao");
+		SaveTeacherDao daoSaveTeacher = (SaveTeacherDao) classPathXmlApplicationContext.getBean("SaveTeacherDao");
+		SaveTeachingDepartmentDao daoSaveTeachingDepartment = (SaveTeachingDepartmentDao) classPathXmlApplicationContext.getBean("SaveTeachingDepartmentDao");
 
-		Student student1 = new Student("Ivan22222222222");
+		Student student1 = new Student("Ivan");
 		daoSaveStudent.saveStudent(student1);
-		//TeachingDepartment mathDepartment = new TeachingDepartment("Math");
-		//daoSaveTeachingDepartment.save(mathDepartment);
-		//daoSaveTeacher.save(new Teacher("Galina", Collections.singleton(student1)));
+		TeachingDepartment mathDepartment = new TeachingDepartment("Math");
+		daoSaveTeachingDepartment.save(mathDepartment);
+
+		Teacher galina = new Teacher("Galina");
+		galina.setTeachingDepartment(mathDepartment);
+		daoSaveTeacher.save(galina);
+		galina.setStudents(Collections.singletonList(student1));
+		daoSaveTeacher.update(galina);
 	}
 }

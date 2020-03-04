@@ -25,7 +25,8 @@ public class SpringContext
 
 	public EntityManager getEntityManager()
 	{
-		return entityManagerFactory.createEntityManager();
+		return entityManager;
+//		return entityManagerFactory.createEntityManager();
 	}
 
 	public void setEntityManager(EntityManager entityManager)
