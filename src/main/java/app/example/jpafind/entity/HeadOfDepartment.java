@@ -1,4 +1,4 @@
-package app.example.find.entity;
+package app.example.jpafind.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

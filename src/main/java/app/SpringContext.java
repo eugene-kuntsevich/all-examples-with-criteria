@@ -26,7 +26,6 @@ public class SpringContext
 	public EntityManager getEntityManager()
 	{
 		return entityManager;
-//		return entityManagerFactory.createEntityManager();
 	}
 
 	public void setEntityManager(EntityManager entityManager)
@@ -44,11 +43,6 @@ public class SpringContext
 		this.entityManagerFactory = entityManagerFactory;
 	}
 
-	public JpaTransactionManager getJpaTransactionManager()
-	{
-		return jpaTransactionManager;
-	}
-
 	public void setJpaTransactionManager(JpaTransactionManager jpaTransactionManager)
 	{
 		this.jpaTransactionManager = jpaTransactionManager;
@@ -56,6 +50,6 @@ public class SpringContext
 
 	public Session getSession()
 	{
-		return entityManager.getEntityManagerFactory().createEntityManager().unwrap(Session.class);
+		return getEntityManagerFactory().createEntityManager().unwrap(Session.class);
 	}
 }

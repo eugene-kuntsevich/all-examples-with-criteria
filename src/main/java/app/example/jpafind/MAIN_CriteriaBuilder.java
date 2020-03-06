@@ -1,4 +1,4 @@
-package app.example.find;
+package app.example.jpafind;
 
 import java.util.List;
 
@@ -11,13 +11,13 @@ import javax.persistence.criteria.Root;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import app.SpringContext;
-import app.example.find.entity.Student;
+import app.example.jpafind.entity.Student;
 
 public class MAIN_CriteriaBuilder
 {
 	public static void main(String[] args)
 	{
-		new ClassPathXmlApplicationContext("META-INF/find/spring.xml");
+		new ClassPathXmlApplicationContext("META-INF/jpafind/spring.xml");
 		EntityManager entityManager = SpringContext.getInstance().getEntityManager();
 
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -27,6 +27,7 @@ public class MAIN_CriteriaBuilder
 
 		Query query = entityManager.createQuery(criteriaQuery);
 		List<Student> results = query.getResultList();
-		System.out.println("Student: \nId: " + results.get(0).getStudentId() + " name: " + results.get(0).getName());
+		System.out.println("Student: \nId: " + results.get(0).getStudentId() + " name: " + results.get(0).getName() + " teacher: " + results.get(18).getTeachers().iterator().next());
+		System.out.println("Size = " + results.size());
 	}
 }

@@ -9,7 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import app.SpringContext;
 import app.example.find.entity.Student;
 
-public class MAIN_StudentsAndTeachers
+public class MAIN_HibCriteria_StudentsAndTeachers
 {
 	public static void main(String[] args)
 	{
@@ -21,5 +21,6 @@ public class MAIN_StudentsAndTeachers
 		List<Student> students = criteria.list();
 		System.out.println("Student: \nId: " + students.get(0).getStudentId() + " name: " + students.get(0).getName() + " teacher: " + students.get(0).getTeachers().iterator().next().getName());
 		System.out.println("Student: \nId: " + students.get(1).getStudentId() + " name: " + students.get(1).getName() + " teacher: " + students.get(1).getTeachers().iterator().next().getName());
+		System.out.println("Student: \nId: " + students.get(2).getStudentId() + " name: " + students.get(2).getName() + " teacher: " + students.get(2).getTeachers().iterator().next().getName());
 	}
 }

@@ -7,30 +7,12 @@ import org.hibernate.Session;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import app.SpringContext;
-import app.example.find.entity.Student;
 import app.example.find.entity.Teacher;
 
 /**
- * Using without keyword mappedBy https://www.sql.ru/forum/915534/mappedby-hibernate
  *
- * but this is only one-way communication between objects (Teacher->TeachingDepartment)
- * can't get TeachingDepartment with Teachers
- *
- * FROM TeachingDepartment class:
- * @OneToMany()
- *public List<Teacher> getTeachers()
- *{
- *return teachers;
- *}
- * FROM Teacher class:
- * @ManyToOne
- *@JoinColumn(name = "teaching_department_id")
- *public TeachingDepartment getTeachingDepartment()
- *{
- *return teachingDepartment;
- *}
  */
-public class MAIN_TeachersAndTeachingDepartment
+public class MAIN_HibCriteria_TeachersAndTeachingDepartment
 {
 	public static void main(String[] args)
 	{

@@ -1,4 +1,4 @@
-package app.example.find.entity;
+package app.example.jpafind.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -60,11 +60,12 @@ public class Teacher implements Serializable
 		this.name = name;
 	}
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "STUDENTS_TO_TEACHERS", joinColumns = {@JoinColumn(name = "teacher_id")}, inverseJoinColumns = {@JoinColumn(
 		name = "student_id")})
 	public List<Student> getStudents()
 	{
+		System.out.println("Getter getStudents invoked");
 		return students;
 	}
 
@@ -73,7 +74,7 @@ public class Teacher implements Serializable
 		this.students = students;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teaching_department_id")
 	public TeachingDepartment getTeachingDepartment()
 	{

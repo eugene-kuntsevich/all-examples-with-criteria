@@ -22,7 +22,7 @@ import static org.hibernate.sql.JoinType.LEFT_OUTER_JOIN;
 /**
  * getting TeachingDepartment with Teachers with students and with HeadOfDepartment
  */
-public class MAIN_TeachingDepartmentAndTeachersWithStudentsAndHeadOfDept
+public class MAIN_HibCriteria__TeachingDepartmentAndTeachersWithStudentsAndHeadOfDept
 {
 	public static void main(String[] args)
 	{
@@ -30,8 +30,6 @@ public class MAIN_TeachingDepartmentAndTeachersWithStudentsAndHeadOfDept
 		Session session = SpringContext.getInstance().getSession();
 
 		Criteria criteria = session.createCriteria(TeachingDepartment.class);
-		//criteria.createCriteria("teachers", "t", LEFT_OUTER_JOIN).add(Restrictions.or(eq("name", "Galina"), isNull("name")));
-		//criteria.createCriteria("t.students", LEFT_OUTER_JOIN).add(Restrictions.or(eq("name", "Ivan")));
 		Criteria crTeacher =  criteria.createCriteria("teachers", "t", LEFT_OUTER_JOIN).add(Restrictions.or(eq("name", "Galina"), isNull("name")));
 		crTeacher.createCriteria("students", LEFT_OUTER_JOIN).add(Restrictions.or(eq("name", "Ivan")));
 

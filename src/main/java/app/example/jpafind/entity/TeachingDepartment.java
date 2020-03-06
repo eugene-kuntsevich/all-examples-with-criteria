@@ -1,4 +1,4 @@
-package app.example.find.entity;
+package app.example.jpafind.entity;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class TeachingDepartment
 		this.departmentName = departmentName;
 	}
 
-	@OneToMany(mappedBy = "teachingDepartment")
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true, mappedBy = "teachingDepartment")
 	public List<Teacher> getTeachers()
 	{
 		return teachers;
